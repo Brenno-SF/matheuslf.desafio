@@ -3,12 +3,16 @@ package com.bsf.dev.matheuslf.desafio.inscritos.entities;
 import com.bsf.dev.matheuslf.desafio.inscritos.enums.Priority;
 import com.bsf.dev.matheuslf.desafio.inscritos.enums.Status;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "task")
+@Getter
+@Setter
 public class TaskEntity {
 
     @Id
