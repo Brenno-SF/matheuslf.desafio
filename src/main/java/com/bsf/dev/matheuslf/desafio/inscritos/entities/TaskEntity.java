@@ -26,8 +26,10 @@ public class TaskEntity {
     @CreationTimestamp
     private LocalDateTime startDate;
 
+    @Enumerated(EnumType.STRING)
     private Priority priority;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne
