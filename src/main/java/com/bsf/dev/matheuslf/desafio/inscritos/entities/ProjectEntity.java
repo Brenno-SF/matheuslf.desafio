@@ -2,7 +2,9 @@ package com.bsf.dev.matheuslf.desafio.inscritos.entities;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -13,10 +15,13 @@ import java.util.List;
 @Table(name = "project")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
+    @SequenceGenerator(name = "project_seq", sequenceName = "project_seq", allocationSize = 1)
     @Column(name = "project_id")
     private Long projectId;
 
@@ -33,6 +38,6 @@ public class ProjectEntity {
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "projectEntity", cascade = CascadeType.ALL)
     private List<TaskEntity> tasks;
 }

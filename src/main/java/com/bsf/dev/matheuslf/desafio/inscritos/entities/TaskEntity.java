@@ -3,7 +3,9 @@ package com.bsf.dev.matheuslf.desafio.inscritos.entities;
 import com.bsf.dev.matheuslf.desafio.inscritos.enums.Priority;
 import com.bsf.dev.matheuslf.desafio.inscritos.enums.Status;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -13,10 +15,13 @@ import java.time.LocalDateTime;
 @Table(name = "task")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TaskEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_seq")
+    @SequenceGenerator(name = "task_seq", sequenceName = "task_seq", allocationSize = 1)
     @Column(name = "task_id")
     private Long taskId;
 
