@@ -11,7 +11,7 @@ public interface TaskMapper {
     @Mapping(source = "projectEntity.projectId", target = "projectId")
     TaskDTO toDTO(TaskEntity entity);
 
-    @Mapping(source = "projectId", target = "projectEntity.projectId")
+    @Mapping(source = "projectId", target = "projectEntity")
     TaskEntity toEntity(TaskDTO dto);
 
     default ProjectEntity map(Long projectId) {
