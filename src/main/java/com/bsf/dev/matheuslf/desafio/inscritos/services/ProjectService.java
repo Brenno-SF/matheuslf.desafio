@@ -4,7 +4,11 @@ import com.bsf.dev.matheuslf.desafio.inscritos.dto.ProjectDTO;
 import com.bsf.dev.matheuslf.desafio.inscritos.entities.ProjectEntity;
 import com.bsf.dev.matheuslf.desafio.inscritos.mappers.ProjectMapper;
 import com.bsf.dev.matheuslf.desafio.inscritos.repository.ProjectRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProjectService {
@@ -21,6 +25,10 @@ public class ProjectService {
         ProjectEntity projectEntity = projectMapper.toProjectEntity(projectDTO);
 
         return projectMapper.toProjectDTO(projectRepository.save(projectEntity));
+    }
 
+    public Page<ProjectDTO> listAllProjects(Pageable pageable){
+        return projectRepository.getAllProjects(pageable)
+                .map(projectMapper::toProjectDTO);
     }
 }

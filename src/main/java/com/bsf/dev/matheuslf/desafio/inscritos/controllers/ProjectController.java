@@ -2,12 +2,10 @@ package com.bsf.dev.matheuslf.desafio.inscritos.controllers;
 
 import com.bsf.dev.matheuslf.desafio.inscritos.dto.ProjectDTO;
 import com.bsf.dev.matheuslf.desafio.inscritos.services.ProjectService;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/projects")
@@ -18,8 +16,16 @@ public class ProjectController {
         this.projectService = projectService;
     }
     @PostMapping("/create")
-    public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectDTO projectDTO) {
-        return ResponseEntity.ok(
-                projectService.createProject(projectDTO));
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProjectDTO createProject(@RequestBody ProjectDTO projectDTO) {
+        return projectService.createProject(projectDTO);
     }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Page<ProjectDTO> listAll(Pageable pageable){
+        return projectService.listAllProjects(pageable);
+    }
+
+
 }
