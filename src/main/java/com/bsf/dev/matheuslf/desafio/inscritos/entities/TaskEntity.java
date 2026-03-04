@@ -2,6 +2,7 @@ package com.bsf.dev.matheuslf.desafio.inscritos.entities;
 
 import com.bsf.dev.matheuslf.desafio.inscritos.enums.Priority;
 import com.bsf.dev.matheuslf.desafio.inscritos.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -35,6 +37,9 @@ public class TaskEntity {
     @CreationTimestamp
     private LocalDateTime startDate;
 
+    @Column(name = "due_date")
+    private LocalDate dueDate;
+
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
@@ -43,6 +48,7 @@ public class TaskEntity {
 
     @ManyToOne
     @JoinColumn(name = "project_id_fk")
+    @JsonIgnore
     private ProjectEntity projectEntity;
 
 }
