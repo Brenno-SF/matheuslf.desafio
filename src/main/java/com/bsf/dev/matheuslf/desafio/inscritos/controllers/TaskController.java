@@ -23,7 +23,7 @@ public class TaskController {
     @PostMapping("/create/{projectId}")//TODO: maybe change this
     @ResponseStatus(HttpStatus.CREATED)
     public TaskDTO createTask(@RequestBody TaskDTO dto, @PathVariable Long projectId){
-        return taskService.createTask( dto, projectId);
+        return taskService.create( dto, projectId);
     }
 
     @GetMapping
@@ -32,6 +32,18 @@ public class TaskController {
                                  @RequestParam(required = false) Priority priority,
                                  @RequestParam(required = false) Long projectId,
                                 Pageable pageable){
-        return taskService.listTasks(pageable, status,priority, projectId);
+        return taskService.list(pageable, status,priority, projectId);
+    }
+
+    @PutMapping("/{taskId}/status")
+    @ResponseStatus(HttpStatus.OK)
+    public TaskDTO updateTask(@RequestBody Status status, @PathVariable Long taskId){
+        return taskService.update(taskId, status);
+    }
+
+    @DeleteMapping("/{taskId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Void deleteTask(@PathVariable Long taskId){
+        return taskService.delete(taskId);
     }
 }

@@ -27,7 +27,7 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskDTO createTask (TaskDTO dto,Long projectId){
+    public TaskDTO create (TaskDTO dto,Long projectId){
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(
                 () ->  new RuntimeException("Project not found")//TODO: add custom exceptions
         );
@@ -40,11 +40,31 @@ public class TaskService {
 
     }
 
-    public Page<TaskDTO> listTasks (Pageable pageable, Status status, Priority priority, Long projectId ){
-
+    public Page<TaskDTO> list (Pageable pageable, Status status, Priority priority, Long projectId){
         return taskRepository.findByFilters(pageable, status, priority, projectId)
                 .map(taskMapper::toDTO);
 
+    }
+
+    public TaskDTO update(Long taskId, Status status){
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(
+                () ->  new RuntimeException("Task not found")//TODO: add custom exceptions
+        );
+
+        taskEntity.setStatus(status);
+
+        return taskMapper.toDTO(taskRepository.save(taskEntity));
+    }
+
+    public Void delete(Long taskId){
+
+        if(taskRepository.existsById(taskId))
+            taskRepository.deleteById(taskId);
+        else
+            throw new RuntimeException("Task not found");//TODO: add custom exceptions
+
+
+        return null;
     }
 }
 
